@@ -2,16 +2,23 @@ package com.demo.services;
 
 import com.demo.dto.*;
 import com.demo.dto.parkingSpot.*;
+import com.demo.dto.vehicle.*;
 import com.demo.interfaces.*;
 
-public class EntryServiceImpl implements EntryService {
-    @Override
-    public ParkingTicket createParkingTicket() {
-        return null;
-    }
+import java.util.*;
 
+public class EntryServiceImpl implements EntryService {
+    DisplayService displayService;
     @Override
-    public ParkingSpot findParkingSpot() {
-        return null;
+    public ParkingTicket createParkingTicket(Vehicle vehicle) {
+
+        // need to fetch parking spot type here.
+        ParkingSpot parkingSpot= displayService.getParkingSpot("compact");
+        if(parkingSpot== null){
+            System.out.println("There is no parking spot");
+        }
+        parkingSpot.setFree(false);
+        ParkingTicket parkingTicket= new ParkingTicket(vehicle, new Date(), parkingSpot);
+        return parkingTicket;
     }
 }
