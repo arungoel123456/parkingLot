@@ -17,8 +17,17 @@ public class EntryServiceImpl implements EntryService {
         if(parkingSpot== null){
             System.out.println("There is no parking spot");
         }
-        parkingSpot.setFree(false);
-        ParkingTicket parkingTicket= new ParkingTicket(vehicle, new Date(), parkingSpot);
-        return parkingTicket;
+        if (parkingSpot.getFree()) {
+            synchronized (parkingSpot) {
+                if (parkingSpot.getFree()) {
+                    parkingSpot.setFree(false);
+                    ParkingTicket parkingTicket= new ParkingTicket(vehicle, new Date(), parkingSpot);
+
+                    return parkingTicket;
+                }
+            }
+        }
+        
+        throw new Exception("Parking spot not available");
     }
 }
