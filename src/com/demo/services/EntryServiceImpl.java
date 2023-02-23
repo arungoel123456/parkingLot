@@ -8,26 +8,26 @@ import com.demo.interfaces.*;
 import java.util.*;
 
 public class EntryServiceImpl implements EntryService {
-    DisplayService displayService;
+    ParkingLotService parkingLotService;
     @Override
     public ParkingTicket createParkingTicket(Vehicle vehicle) {
 
         // need to fetch parking spot type here.
-        ParkingSpot parkingSpot= displayService.getParkingSpot("compact");
+        ParkingSpot parkingSpot= parkingLotService.getParkingSpot("compact");
         if(parkingSpot== null){
             System.out.println("There is no parking spot");
         }
-        if (parkingSpot.getFree()) {
+        if (parkingSpot.isFree()) {
             synchronized (parkingSpot) {
-                if (parkingSpot.getFree()) {
+                if (parkingSpot.isFree()) {
                     parkingSpot.setFree(false);
                     ParkingTicket parkingTicket= new ParkingTicket(vehicle, new Date(), parkingSpot);
-
+                    // updateDisplayService()
                     return parkingTicket;
                 }
             }
         }
-        
-        throw new Exception("Parking spot not available");
+        return null;
+//        throw new Exception("Parking spot not available");
     }
 }

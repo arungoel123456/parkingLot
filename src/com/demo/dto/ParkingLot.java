@@ -1,18 +1,20 @@
 package com.demo.dto;
 
+import com.demo.dto.parkingSpot.*;
+
 import java.util.*;
 
 public class ParkingLot {
     private String name;
     private List<EntrancePanel> entrances;
     private List<ExitPanel> exits;
-    private List<ParkingFloor> floors;
     private DisplayBoard displayBoard;
+    private Map<String , List<ParkingSpot>> occupiedParkingSpots;
+    private Map<String , List<ParkingSpot>> freeParkingSpots;
     private static ParkingLot parkingLot= null;
     private ParkingLot(){
         entrances= new ArrayList<EntrancePanel>();
         exits= new ArrayList<ExitPanel>();
-        floors= new ArrayList<ParkingFloor>();
         displayBoard= DisplayBoard.getInstance();
     }
 
@@ -56,18 +58,6 @@ public class ParkingLot {
         exits.add(exitPanel);
     }
 
-    public void addFloor(ParkingFloor floor)
-    {
-        floors.add(floor);
-    }
-
-    public List<ParkingFloor> getFloors() {
-        return floors;
-    }
-
-    public void setFloors(List<ParkingFloor> floors) {
-        this.floors = floors;
-    }
 
     public DisplayBoard getDisplayBoard() {
         return displayBoard;
@@ -75,5 +65,21 @@ public class ParkingLot {
 
     public void setDisplayBoard(DisplayBoard displayBoard) {
         this.displayBoard = displayBoard;
+    }
+
+    public Map<String, List<ParkingSpot>> getOccupiedParkingSpots() {
+        return occupiedParkingSpots;
+    }
+
+    public void setOccupiedParkingSpots(Map<String, List<ParkingSpot>> occupiedParkingSpots) {
+        this.occupiedParkingSpots = occupiedParkingSpots;
+    }
+
+    public Map<String, List<ParkingSpot>> getFreeParkingSpots() {
+        return freeParkingSpots;
+    }
+
+    public void setFreeParkingSpots(Map<String, List<ParkingSpot>> freeParkingSpots) {
+        this.freeParkingSpots = freeParkingSpots;
     }
 }

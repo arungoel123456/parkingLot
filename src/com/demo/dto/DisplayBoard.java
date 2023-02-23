@@ -5,11 +5,11 @@ import com.demo.dto.parkingSpot.*;
 import java.util.*;
 
 public class DisplayBoard {
-    private Map<String, List<ParkingSpot>> parkingSpotCounts;
     private static DisplayBoard displayBoard= null;
+    private List<ParkingSpot> parkingSpots;
 
     private DisplayBoard() {
-        parkingSpotCounts = new HashMap<>();
+        parkingSpots= new ArrayList<>();
     }
 
     public static DisplayBoard getInstance(){
@@ -19,7 +19,11 @@ public class DisplayBoard {
         return displayBoard;
     }
 
-    public Map<String, List<ParkingSpot>> getParkingSpotCounts() {
-        return parkingSpotCounts;
+    public List<ParkingSpot> getParkingSpots() {
+        return parkingSpots;
+    }
+
+    public void setParkingSpots(List<ParkingSpot> parkingSpot) {
+        this.parkingSpots = parkingSpot;
     }
 }
