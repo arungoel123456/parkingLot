@@ -9,8 +9,8 @@ public class ParkingLot {
     private List<EntrancePanel> entrances;
     private List<ExitPanel> exits;
     private DisplayBoard displayBoard;
-    private Map<String , List<ParkingSpot>> occupiedParkingSpots;
-    private Map<String , List<ParkingSpot>> freeParkingSpots;
+    private Map<String , HashSet<ParkingSpot>> occupiedParkingSpots;
+    private Map<String , HashSet<ParkingSpot>> freeParkingSpots;
     private static ParkingLot parkingLot= null;
     private ParkingLot(){
         entrances= new ArrayList<EntrancePanel>();
@@ -67,19 +67,19 @@ public class ParkingLot {
         this.displayBoard = displayBoard;
     }
 
-    public Map<String, List<ParkingSpot>> getOccupiedParkingSpots() {
+    public Map<String, HashSet<ParkingSpot>> getOccupiedParkingSpots() {
         return occupiedParkingSpots;
     }
 
-    public void setOccupiedParkingSpots(Map<String, List<ParkingSpot>> occupiedParkingSpots) {
+    public void setOccupiedParkingSpots(Map<String, HashSet<ParkingSpot>> occupiedParkingSpots) {
         this.occupiedParkingSpots = occupiedParkingSpots;
     }
 
-    public Map<String, List<ParkingSpot>> getFreeParkingSpots() {
+    public Map<String, HashSet<ParkingSpot>> getFreeParkingSpots() {
         return freeParkingSpots;
     }
 
-    public void setFreeParkingSpots(Map<String, List<ParkingSpot>> freeParkingSpots) {
+    public void setFreeParkingSpots(Map<String, HashSet<ParkingSpot>> freeParkingSpots) {
         this.freeParkingSpots = freeParkingSpots;
     }
 }

@@ -14,9 +14,4 @@ public class Admin extends Account{
     {
         parkingLot.addExitPanel(exitPanel);
     }
-
-    public void addFloor(ParkingFloor floor)
-    {
-        parkingLot.addFloor(floor);
-    }
 }

@@ -2,6 +2,8 @@ package com.demo.dto.parkingSpot;
 
 import com.demo.dto.*;
 
+import java.util.*;
+
 public abstract class ParkingSpot {
     private String id;
     private boolean isFree;
@@ -29,5 +31,17 @@ public abstract class ParkingSpot {
 
     public void setParkingFloor(ParkingFloor parkingFloor) {
         this.parkingFloor = parkingFloor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ParkingSpot that)) return false;
+        return id.equals(that.id) && parkingFloor.equals(that.parkingFloor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, parkingFloor);
     }
 }
