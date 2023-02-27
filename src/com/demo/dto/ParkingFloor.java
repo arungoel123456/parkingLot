@@ -15,5 +15,4 @@ public class ParkingFloor {
     public void removeParkingSpot(ParkingSpot parkingSpot){
         parkingSpotMap.remove(parkingSpot.getId());
     }
-
 }
