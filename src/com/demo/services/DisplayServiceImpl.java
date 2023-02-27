@@ -2,39 +2,18 @@ package com.demo.services;
 
 import com.demo.dto.*;
 import com.demo.dto.parkingSpot.*;
-import com.demo.interfaces.*;
+import com.demo.interfaces.Observer;
 
 import java.util.*;
 
-public class DisplayServiceImpl implements DisplayService {
-
-    public boolean checkSpot(String spot){
-        DisplayBoard displayBoard=  DisplayBoard.getInstance();
-        return displayBoard.getParkingSpotCounts().get(spot).size()>0;
-    }
+public class DisplayServiceImpl implements Observer {
+    private DisplayBoard displayBoard= DisplayBoard.getInstance();
     @Override
-    public ParkingSpot getParkingSpot(String spot){
-        DisplayBoard displayBoard=  DisplayBoard.getInstance();
-        if(!checkSpot(spot)){
-            return null;
-        }
-        return displayBoard.getParkingSpotCounts().get(spot).remove(0);
-    }
+    public void update(int event) {
 
-    @Override
-    public void addFreeParkingSpot(ParkingSpot parkingSpot) {
-        DisplayBoard displayBoard=  DisplayBoard.getInstance();
-        Map<String, List<ParkingSpot>> parkingSpotCounts = displayBoard.getParkingSpotCounts();
-        if(parkingSpot.getClass() == Compact.class){
-            List<ParkingSpot> compactParkingSpots= parkingSpotCounts.get("compact");
-            compactParkingSpots.add(parkingSpot);
-            parkingSpotCounts.put( "compact", compactParkingSpots) ;
+        synchronized (displayBoard){
+            displayBoard.setFreeParkingSpotCount(displayBoard.getFreeParkingSpotCount() + event );
+            displayBoard.setOccupiedParkingSpotCount(displayBoard.getOccupiedParkingSpotCount() - event );
         }
-        else if(parkingSpot.getClass() == Electric.class){
-            List<ParkingSpot> electricParkingSpots= parkingSpotCounts.get("electric");
-            electricParkingSpots.add(parkingSpot);
-            parkingSpotCounts.put( "electric", electricParkingSpots) ;
-        }
-        // same goes for other spots.
     }
 }

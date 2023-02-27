@@ -7,16 +7,10 @@ public class Admin extends Account{
 
     public void addEntrancePanel(EntrancePanel entrancePanel)
     {
-        // we have the same function in parking lot. Is it right?
         parkingLot.addEntrancePanel(entrancePanel);
     }
     public void addExitPanel(ExitPanel exitPanel)
     {
         parkingLot.addExitPanel(exitPanel);
-    }
-
-    public void addFloor(ParkingFloor floor)
-    {
-        parkingLot.addFloor(floor);
     }
 }

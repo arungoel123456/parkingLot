@@ -5,11 +5,14 @@ import com.demo.dto.parkingSpot.*;
 import java.util.*;
 
 public class DisplayBoard {
-    private Map<String, List<ParkingSpot>> parkingSpotCounts;
     private static DisplayBoard displayBoard= null;
+    private HashSet<ParkingSpot> parkingSpots;
+    private int freeParkingSpotCount;
+    private int occupiedParkingSpotCount;
+
 
     private DisplayBoard() {
-        parkingSpotCounts = new HashMap<>();
+        parkingSpots= new HashSet<>();
     }
 
     public static DisplayBoard getInstance(){
@@ -19,7 +22,27 @@ public class DisplayBoard {
         return displayBoard;
     }
 
-    public Map<String, List<ParkingSpot>> getParkingSpotCounts() {
-        return parkingSpotCounts;
+    public HashSet<ParkingSpot> getParkingSpots() {
+        return parkingSpots;
+    }
+
+    public void setParkingSpots(HashSet<ParkingSpot> parkingSpot) {
+        this.parkingSpots = parkingSpot;
+    }
+
+    public int getFreeParkingSpotCount() {
+        return freeParkingSpotCount;
+    }
+
+    public void setFreeParkingSpotCount(int freeParkingSpotCount) {
+        this.freeParkingSpotCount = freeParkingSpotCount;
+    }
+
+    public int getOccupiedParkingSpotCount() {
+        return occupiedParkingSpotCount;
+    }
+
+    public void setOccupiedParkingSpotCount(int occupiedParkingSpotCount) {
+        this.occupiedParkingSpotCount = occupiedParkingSpotCount;
     }
 }

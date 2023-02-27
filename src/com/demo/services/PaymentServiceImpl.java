@@ -1,6 +1,7 @@
 package com.demo.services;
 
 import com.demo.dto.*;
+import com.demo.dto.payment.*;
 import com.demo.interfaces.*;
 
 import java.util.*;
@@ -8,15 +9,14 @@ import java.util.*;
 public class PaymentServiceImpl implements PaymentService {
     @Override
     public boolean acceptPayment(ParkingTicket parkingTicket) {
-        int price= calculatePrice(parkingTicket);
-
-        // get money from user.
-        return false;
+        double price= calculatePrice(parkingTicket);
+        Payment payment= new CreditCard(price);
+        return payment.initiatePayment();
     }
 
     @Override
-    public int calculatePrice(ParkingTicket parkingTicket) {
+    public double calculatePrice(ParkingTicket parkingTicket) {
         long parkedHours = new Date().getTime() - parkingTicket.getTimestamp().getTime();
-        return (int) (parkedHours*10);
+        return parkedHours*10;
     }
 }
