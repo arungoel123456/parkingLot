@@ -19,4 +19,10 @@ public class PaymentServiceImpl implements PaymentService {
         long parkedHours = new Date().getTime() - parkingTicket.getTimestamp().getTime();
         return parkedHours*10;
     }
+
+    @Override
+    public boolean acceptElectricSpotPayment(double amount){
+        Payment payment= new CreditCard(amount);
+        return payment.initiatePayment();
+    }
 }
