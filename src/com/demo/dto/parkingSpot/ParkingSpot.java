@@ -1,12 +1,14 @@
 package com.demo.dto.parkingSpot;
 
 import com.demo.dto.*;
+import com.demo.enums.*;
 
 import java.util.*;
 
 public abstract class ParkingSpot {
     private String id;
     private boolean isFree;
+    private ParkingTypeEnum parkingTypeEnum= ParkingTypeEnum.COMPACT;
     private ParkingFloor parkingFloor;
 
     public String getId() {
@@ -43,5 +45,8 @@ public abstract class ParkingSpot {
     @Override
     public int hashCode() {
         return Objects.hash(id, parkingFloor);
+    }
+    public ParkingTypeEnum getParkingTypeEnum() {
+        return parkingTypeEnum;
     }
 }

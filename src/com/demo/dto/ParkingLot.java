@@ -1,6 +1,7 @@
 package com.demo.dto;
 
 import com.demo.dto.parkingSpot.*;
+import com.demo.enums.*;
 
 import java.util.*;
 
@@ -9,8 +10,8 @@ public class ParkingLot {
     private List<EntrancePanel> entrances;
     private List<ExitPanel> exits;
     private DisplayBoard displayBoard;
-    private Map<String , HashSet<ParkingSpot>> occupiedParkingSpots;
-    private Map<String , HashSet<ParkingSpot>> freeParkingSpots;
+    private Map<ParkingTypeEnum , HashSet<ParkingSpot>> occupiedParkingSpots;
+    private Map<ParkingTypeEnum , HashSet<ParkingSpot>> freeParkingSpots;
     private static ParkingLot parkingLot= null;
     private ParkingLot(){
         entrances= new ArrayList<EntrancePanel>();
@@ -67,19 +68,19 @@ public class ParkingLot {
         this.displayBoard = displayBoard;
     }
 
-    public Map<String, HashSet<ParkingSpot>> getOccupiedParkingSpots() {
+    public Map<ParkingTypeEnum, HashSet<ParkingSpot>> getOccupiedParkingSpots() {
         return occupiedParkingSpots;
     }
 
-    public void setOccupiedParkingSpots(Map<String, HashSet<ParkingSpot>> occupiedParkingSpots) {
+    public void setOccupiedParkingSpots(Map<ParkingTypeEnum, HashSet<ParkingSpot>> occupiedParkingSpots) {
         this.occupiedParkingSpots = occupiedParkingSpots;
     }
 
-    public Map<String, HashSet<ParkingSpot>> getFreeParkingSpots() {
+    public Map<ParkingTypeEnum, HashSet<ParkingSpot>> getFreeParkingSpots() {
         return freeParkingSpots;
     }
 
-    public void setFreeParkingSpots(Map<String, HashSet<ParkingSpot>> freeParkingSpots) {
+    public void setFreeParkingSpots(Map<ParkingTypeEnum, HashSet<ParkingSpot>> freeParkingSpots) {
         this.freeParkingSpots = freeParkingSpots;
     }
 }

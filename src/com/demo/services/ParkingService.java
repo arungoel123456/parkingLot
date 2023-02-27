@@ -3,28 +3,42 @@ package com.demo.services;
 import com.demo.dto.*;
 import com.demo.dto.parkingSpot.*;
 import com.demo.dto.vehicle.*;
+import com.demo.enums.*;
 import com.demo.exceptions.*;
 import com.demo.interfaces.*;
+import com.demo.interfaces.Observer;
 
 import java.util.*;
 
 public class ParkingService {
-    ParkingLot parkingLot= ParkingLot.getInstance();
+    private ParkingLot parkingLot;
+    private List<Observer> observers;
+    private PaymentService paymentService;
 
+    public ParkingService(){
+        observers= new ArrayList<Observer>();
+        paymentService= new PaymentServiceImpl();
+        parkingLot= ParkingLot.getInstance();
+    }
 
     public ParkingTicket createParkingTicket(Vehicle vehicle) throws SpotNotFoundException {
+        ParkingTypeEnum parkingTypeEnum= getParkingSpotType(vehicle);
+        HashSet<ParkingSpot> freeParkingSpots= parkingLot.getFreeParkingSpots().get(parkingTypeEnum);
+        if(freeParkingSpots.isEmpty()){
+            throw new SpotNotFoundException("Spot not found");
+        }
+
+        HashSet<ParkingSpot> occupiedParkingSpots= parkingLot.getOccupiedParkingSpots().get(parkingTypeEnum);
+        ParkingSpot parkingSpot= freeParkingSpots.iterator().next();
+
         try{
-            // need to fetch parking spot type here.
-            ParkingSpot parkingSpot= getParkingSpot("compact");
-            if(parkingSpot== null){
-                System.out.println("There is no parking spot");
-            }
             if (parkingSpot.isFree()) {
                 synchronized (parkingSpot) {
                     if (parkingSpot.isFree()) {
                         parkingSpot.setFree(false);
+                        occupiedParkingSpots.add(parkingSpot);
                         ParkingTicket parkingTicket= new ParkingTicket(vehicle, new Date(), parkingSpot);
-                        // updateDisplayService()
+                        notifyAllObservers(-1);
                         return parkingTicket;
                     }
                     else {
@@ -39,47 +53,40 @@ public class ParkingService {
         // Is returning null important??
         return null;
     }
-    public void validateParkingTicket(Vehicle vehicle, ParkingTicket parkingTicket) {
+
+    private void notifyAllObservers(int event)
+    {
+        for(Observer observer: observers){
+            observer.update(event);
+        }
+    }
+
+    public void validateParkingTicket(Vehicle vehicle, ParkingTicket parkingTicket) throws InvalidTicketException {
         if(parkingTicket.getVehicle().equals(vehicle))
         {
+            paymentService.acceptPayment(parkingTicket);
             ParkingSpot parkingSpot= parkingTicket.getParkingSpot();
             parkingSpot.setFree(true);
-            addFreeParkingSpot(parkingSpot);
-            // call payment service and get money
+            parkingLot.getFreeParkingSpots().get(parkingSpot.getParkingTypeEnum()).add(parkingSpot);
+            parkingLot.getOccupiedParkingSpots().get(parkingSpot.getParkingTypeEnum()).remove(parkingSpot);
+            notifyAllObservers(-1);
+        }
+        else
+        {
+            throw new InvalidTicketException("This is an invalid ticket");
         }
     }
 
-    public ParkingSpot getParkingSpot(String spot) throws SpotNotFoundException {
-        HashSet<ParkingSpot> freeParkingSpots= parkingLot.getFreeParkingSpots().get(spot);
-        HashSet<ParkingSpot> occupiedParkingSpots= parkingLot.getOccupiedParkingSpots().get(spot);
-
-        if(freeParkingSpots.size() > 0){
-            ParkingSpot parkingSpot= freeParkingSpots.iterator().next();
-            freeParkingSpots.remove(parkingSpot);
-            occupiedParkingSpots.add(parkingSpot);
-            return parkingSpot;
+    public ParkingTypeEnum getParkingSpotType(Vehicle vehicle){
+        if( vehicle instanceof Car){
+            return ParkingTypeEnum.COMPACT;
         }
-        else {
-            throw new SpotNotFoundException("Spot not found");
+        else if(vehicle instanceof Truck){
+            return ParkingTypeEnum.ELECTRIC;
         }
-    }
-
-    public void addFreeParkingSpot(ParkingSpot parkingSpot) {
-        String parkingSpotType= getParkingSpotType(parkingSpot);
-        parkingLot.getFreeParkingSpots().get(parkingSpotType).add(parkingSpot);
-        parkingLot.getOccupiedParkingSpots().get(parkingSpotType).remove(parkingSpot);
-    }
-
-    public String getParkingSpotType(ParkingSpot parkingSpot){
-        if( parkingSpot instanceof Compact){
-            return "compact";
+        else if(vehicle instanceof Truck){
+            return ParkingTypeEnum.LARGE;
         }
-        else if(parkingSpot instanceof Electric){
-            return "electric";
-        }
-        else if(parkingSpot instanceof Large){
-            return "large";
-        }
-        return "";
+        return null;
     }
 }

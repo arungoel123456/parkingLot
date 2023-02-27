@@ -4,9 +4,12 @@ import com.demo.dto.parkingSpot.*;
 
 import java.util.*;
 
-public class DisplayBoard extends ParkingSpotObserver {
+public class DisplayBoard {
     private static DisplayBoard displayBoard= null;
     private HashSet<ParkingSpot> parkingSpots;
+    private int freeParkingSpotCount;
+    private int occupiedParkingSpotCount;
+
 
     private DisplayBoard() {
         parkingSpots= new HashSet<>();
@@ -27,10 +30,19 @@ public class DisplayBoard extends ParkingSpotObserver {
         this.parkingSpots = parkingSpot;
     }
 
-    @Override
-    public void update(ParkingSpot parkingSpot) {
-        parkingSpots.remove(parkingSpot);
-        parkingSpot.setFree(!parkingSpot.isFree());
-        parkingSpots.add(parkingSpot);
+    public int getFreeParkingSpotCount() {
+        return freeParkingSpotCount;
+    }
+
+    public void setFreeParkingSpotCount(int freeParkingSpotCount) {
+        this.freeParkingSpotCount = freeParkingSpotCount;
+    }
+
+    public int getOccupiedParkingSpotCount() {
+        return occupiedParkingSpotCount;
+    }
+
+    public void setOccupiedParkingSpotCount(int occupiedParkingSpotCount) {
+        this.occupiedParkingSpotCount = occupiedParkingSpotCount;
     }
 }
