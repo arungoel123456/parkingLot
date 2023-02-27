@@ -10,12 +10,12 @@ import com.demo.interfaces.Observer;
 
 import java.util.*;
 
-public class ParkingService {
+public class ParkingServiceImpl {
     private ParkingLot parkingLot;
     private List<Observer> observers;
     private PaymentService paymentService;
 
-    public ParkingService(){
+    public ParkingServiceImpl(){
         observers= new ArrayList<Observer>();
         paymentService= new PaymentServiceImpl();
         parkingLot= ParkingLot.getInstance();

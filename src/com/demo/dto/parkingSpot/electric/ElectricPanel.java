@@ -13,8 +13,8 @@ public class ElectricPanel {
         startTime= new Date();
     }
 
-    public long finish(){
-        return new Date().getTime() - startTime.getTime();
+    public double finish(){
+       long hours = new Date().getTime() - startTime.getTime();
+       return hours * amountPerSecond;
     }
-
 }
