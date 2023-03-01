@@ -1,6 +1,6 @@
-package com.demo.dto.payment;
+package com.demo.paymentMethod;
 
-public class Cash extends Payment{
+public class Cash extends PaymentMethod{
 
     public Cash(double amount) {
         super(amount);
@@ -8,6 +8,6 @@ public class Cash extends Payment{
 
     @Override
     public boolean initiatePayment() {
-        return true;
+        return false;
     }
 }

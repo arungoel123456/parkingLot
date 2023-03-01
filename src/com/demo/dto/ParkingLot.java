@@ -10,8 +10,8 @@ public class ParkingLot {
     private List<EntrancePanel> entrances;
     private List<ExitPanel> exits;
     private DisplayBoard displayBoard;
-    private Map<ParkingTypeEnum , HashSet<ParkingSpot>> occupiedParkingSpots;
-    private Map<ParkingTypeEnum , HashSet<ParkingSpot>> freeParkingSpots;
+    private Map<ParkingTypeEnum , List<ParkingSpot>> occupiedParkingSpots;
+    private Map<ParkingTypeEnum , List<ParkingSpot>> freeParkingSpots;
     private static ParkingLot parkingLot= null;
     private ParkingLot(){
         entrances= new ArrayList<EntrancePanel>();
@@ -68,19 +68,19 @@ public class ParkingLot {
         this.displayBoard = displayBoard;
     }
 
-    public Map<ParkingTypeEnum, HashSet<ParkingSpot>> getOccupiedParkingSpots() {
+    public Map<ParkingTypeEnum, List<ParkingSpot>> getOccupiedParkingSpots() {
         return occupiedParkingSpots;
     }
 
-    public void setOccupiedParkingSpots(Map<ParkingTypeEnum, HashSet<ParkingSpot>> occupiedParkingSpots) {
+    public void setOccupiedParkingSpots(Map<ParkingTypeEnum, List<ParkingSpot>> occupiedParkingSpots) {
         this.occupiedParkingSpots = occupiedParkingSpots;
     }
 
-    public Map<ParkingTypeEnum, HashSet<ParkingSpot>> getFreeParkingSpots() {
+    public Map<ParkingTypeEnum, List<ParkingSpot>> getFreeParkingSpots() {
         return freeParkingSpots;
     }
 
-    public void setFreeParkingSpots(Map<ParkingTypeEnum, HashSet<ParkingSpot>> freeParkingSpots) {
+    public void setFreeParkingSpots(Map<ParkingTypeEnum, List<ParkingSpot>> freeParkingSpots) {
         this.freeParkingSpots = freeParkingSpots;
     }
 }

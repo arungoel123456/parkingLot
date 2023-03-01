@@ -10,6 +10,7 @@ public abstract class ParkingSpot {
     private boolean isFree;
     private ParkingTypeEnum parkingTypeEnum= ParkingTypeEnum.COMPACT;
     private ParkingFloor parkingFloor;
+    protected  double amount;
 
     public String getId() {
         return id;
@@ -35,6 +36,14 @@ public abstract class ParkingSpot {
         this.parkingFloor = parkingFloor;
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,4 +58,5 @@ public abstract class ParkingSpot {
     public ParkingTypeEnum getParkingTypeEnum() {
         return parkingTypeEnum;
     }
+    public abstract int cost(int parkingHours);
 }

@@ -1,13 +1,12 @@
-package com.demo.dto.payment;
+package com.demo.paymentMethod;
 
-public class CreditCard extends Payment{
-
+public class CreditCard extends PaymentMethod{
     public CreditCard(double amount) {
         super(amount);
     }
 
     @Override
     public boolean initiatePayment() {
-        return true;
+        return false;
     }
 }

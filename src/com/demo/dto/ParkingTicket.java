@@ -52,4 +52,9 @@ public class ParkingTicket {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
+
+    public int getParkingHours(){
+        long milliseconds= System.currentTimeMillis() - timestamp.getTime();
+        return (int) ((milliseconds / (1000*60*60)) % 24);
+    }
 }

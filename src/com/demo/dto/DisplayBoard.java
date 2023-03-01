@@ -10,7 +10,6 @@ public class DisplayBoard {
     private int freeParkingSpotCount;
     private int occupiedParkingSpotCount;
 
-
     private DisplayBoard() {
         parkingSpots= new HashSet<>();
     }
