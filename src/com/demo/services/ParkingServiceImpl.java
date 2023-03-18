@@ -24,13 +24,21 @@ public class ParkingServiceImpl {
         parkingStrategy= strategy;
     }
 
-    public ParkingTicket createParkingTicket(Vehicle vehicle) throws SpotNotFoundException, ParkingSpotTypeNotFound {
-        ParkingTypeEnum parkingTypeEnum= getParkingSpotType(vehicle);
+    public ParkingTicket entry(Vehicle vehicle) throws SpotNotFoundException, ParkingSpotTypeNotFound {
+
+        // is this ok?? Because this is having 2 different throws
+        ParkingSpotTypeEnum parkingSpotTypeEnum = getParkingSpotType(vehicle);
+        System.out.println("parkingSpotTypeEnum: " + parkingSpotTypeEnum);
 
         try {
-            ParkingSpot parkingSpot= parkingStrategy.findParkingSpot(parkingTypeEnum);
-            List<ParkingSpot> freeParkingSpots= parkingLot.getFreeParkingSpots().get(parkingTypeEnum);
-            List<ParkingSpot> occupiedParkingSpots= parkingLot.getOccupiedParkingSpots().get(parkingTypeEnum);
+            ParkingSpot parkingSpot= parkingStrategy.findParkingSpot(parkingSpotTypeEnum);
+            System.out.println("parkingSpot: "+ parkingSpot);
+            List<ParkingSpot> freeParkingSpots= parkingLot.getFreeParkingSpots().get(parkingSpotTypeEnum);
+            List<ParkingSpot> occupiedParkingSpots= parkingLot.getOccupiedParkingSpots().get(parkingSpotTypeEnum);
+
+//            System.out.println(freeParkingSpots);
+//            System.out.println(occupiedParkingSpots);
+
 
             if (parkingSpot.isFree()) {
                 synchronized (parkingSpot) {
@@ -38,12 +46,16 @@ public class ParkingServiceImpl {
                         parkingSpot.setFree(false);
                         freeParkingSpots.remove(parkingSpot);
                         occupiedParkingSpots.add(parkingSpot);
-                        ParkingTicket parkingTicket= new ParkingTicket(vehicle, new Date(), parkingSpot);
-                        notifyAllObservers( new ParkingEvent(ParkingEventType.ENTRY , parkingTypeEnum) );
+                        ParkingTicket parkingTicket= new ParkingTicket(vehicle, new Date(), parkingSpot); // date should be local date time
+                        notifyAllObservers( new ParkingEvent(ParkingEventType.ENTRY , parkingSpotTypeEnum) );
+
+//                        System.out.println(freeParkingSpots);
+//                        System.out.println(occupiedParkingSpots);
+
                         return parkingTicket;
                     }
                     else {
-                        return createParkingTicket(vehicle);
+                        return entry(vehicle);
                     }
                 }
             }
@@ -62,11 +74,11 @@ public class ParkingServiceImpl {
     }
 
     // how does these look
-    private void addWash(ParkingTicket parkingTicket){
+    public void addWash(ParkingTicket parkingTicket){
         parkingTicket.setParkingSpot(  new Wash( parkingTicket.getParkingSpot() ));
     }
 
-    private void addElectricCharge(ParkingTicket parkingTicket){
+    public void addElectricCharge(ParkingTicket parkingTicket){
         parkingTicket.setParkingSpot( new ElectricCharge( parkingTicket.getParkingSpot() ));
     }
 
@@ -88,18 +100,8 @@ public class ParkingServiceImpl {
         }
     }
 
-    public ParkingTypeEnum getParkingSpotType(Vehicle vehicle) throws ParkingSpotTypeNotFound {
-        if( vehicle instanceof Car){
-            return ParkingTypeEnum.COMPACT;
-        }
-        else if(vehicle instanceof Truck){
-            return ParkingTypeEnum.ELECTRIC;
-        }
-        else if(vehicle instanceof Truck){
-            return ParkingTypeEnum.LARGE;
-        }
-        else {
-            throw new ParkingSpotTypeNotFound("This type is spot is not available");
-        }
+    public ParkingSpotTypeEnum getParkingSpotType(Vehicle vehicle) throws ParkingSpotTypeNotFound {
+        Map<Class, ParkingSpotTypeEnum> vehicleToParkingSpotMap= parkingLot.getVehicleToParkingSpotMap();
+        return vehicleToParkingSpotMap.get(vehicle.getClass());
     }
 }

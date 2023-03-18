@@ -8,17 +8,17 @@ import java.util.concurrent.atomic.*;
 
 public class ParkingTicket {
 
-    private static AtomicInteger ID_GENERATOR;
+    private static AtomicInteger ID_GENERATOR= new AtomicInteger(0);;
     private String id;
     private Vehicle vehicle;
     private Date timestamp;
     private ParkingSpot parkingSpot;
 
     public ParkingTicket(Vehicle vehicle, Date timestamp, ParkingSpot parkingSpot) {
-        this.id = String.valueOf(ID_GENERATOR.getAndIncrement());
         this.vehicle = vehicle;
         this.timestamp = timestamp;
         this.parkingSpot= parkingSpot;
+        id= String.valueOf(ID_GENERATOR.incrementAndGet());
     }
 
     public ParkingSpot getParkingSpot() {
@@ -57,4 +57,5 @@ public class ParkingTicket {
         long milliseconds= System.currentTimeMillis() - timestamp.getTime();
         return (int) ((milliseconds / (1000*60*60)) % 24);
     }
+
 }

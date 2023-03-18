@@ -4,13 +4,15 @@ import com.demo.dto.*;
 import com.demo.dto.parkingSpot.*;
 import com.demo.enums.*;
 import com.demo.interfaces.Observer;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
 public class DisplayServiceImpl implements Observer {
-    private DisplayBoard displayBoard= DisplayBoard.getInstance();
+    private Map<ParkingSpotTypeEnum, Integer> freeSpotCounts= DisplayBoard.getInstance().getFreeSpotCounts();
+
     @Override
-    public void update(ParkingEvent event) {
+    public void update(@NotNull ParkingEvent event) {
         int count= 0;
         if(event.getType().equals(ParkingEventType.ENTRY))
         {
@@ -19,8 +21,7 @@ public class DisplayServiceImpl implements Observer {
         else{
             count=1;
         }
-
-        displayBoard.setFreeParkingSpotCount(displayBoard.getFreeParkingSpotCount() + count);
-        displayBoard.setOccupiedParkingSpotCount(displayBoard.getOccupiedParkingSpotCount() - count);
+        int newCount= freeSpotCounts.get(event.getParkingType());
+        freeSpotCounts.put(event.getParkingType() , newCount + count);
     }
 }

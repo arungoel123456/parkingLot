@@ -15,7 +15,7 @@ public class NearestFirstStrategy implements Strategy{
     }
 
     @Override
-    public ParkingSpot findParkingSpot(ParkingTypeEnum parkingSpotType) throws SpotNotFoundException {
+    public ParkingSpot findParkingSpot(ParkingSpotTypeEnum parkingSpotType) throws SpotNotFoundException {
         List<ParkingSpot> freeParkingSpots= parkingLot.getFreeParkingSpots().get(parkingSpotType);
         if(freeParkingSpots.size()==0) throw new SpotNotFoundException("Spot not found");
 

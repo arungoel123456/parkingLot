@@ -3,10 +3,9 @@ package com.demo.dto.parkingSpot.spotDecorator;
 import com.demo.dto.parkingSpot.*;
 
 public class ElectricCharge extends SpotDecorator{
-    private ParkingSpot parkingSpot;
 
     public ElectricCharge(ParkingSpot parkingSpot){
-        this.parkingSpot= parkingSpot;
+        super(parkingSpot);
     }
 
     @Override

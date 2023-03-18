@@ -1,17 +1,16 @@
 package com.demo.dto;
 
 import com.demo.dto.parkingSpot.*;
+import com.demo.enums.*;
 
 import java.util.*;
 
 public class DisplayBoard {
     private static DisplayBoard displayBoard= null;
-    private HashSet<ParkingSpot> parkingSpots;
-    private int freeParkingSpotCount;
-    private int occupiedParkingSpotCount;
+    private Map<ParkingSpotTypeEnum, Integer> freeSpotCounts;
 
     private DisplayBoard() {
-        parkingSpots= new HashSet<>();
+        freeSpotCounts= new HashMap<ParkingSpotTypeEnum, Integer>();
     }
 
     public static DisplayBoard getInstance(){
@@ -21,27 +20,8 @@ public class DisplayBoard {
         return displayBoard;
     }
 
-    public HashSet<ParkingSpot> getParkingSpots() {
-        return parkingSpots;
-    }
 
-    public void setParkingSpots(HashSet<ParkingSpot> parkingSpot) {
-        this.parkingSpots = parkingSpot;
-    }
-
-    public int getFreeParkingSpotCount() {
-        return freeParkingSpotCount;
-    }
-
-    public void setFreeParkingSpotCount(int freeParkingSpotCount) {
-        this.freeParkingSpotCount = freeParkingSpotCount;
-    }
-
-    public int getOccupiedParkingSpotCount() {
-        return occupiedParkingSpotCount;
-    }
-
-    public void setOccupiedParkingSpotCount(int occupiedParkingSpotCount) {
-        this.occupiedParkingSpotCount = occupiedParkingSpotCount;
+    public Map<ParkingSpotTypeEnum, Integer> getFreeSpotCounts() {
+        return freeSpotCounts;
     }
 }

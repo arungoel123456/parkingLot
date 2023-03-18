@@ -1,13 +1,12 @@
 package com.demo.dto;
 
-import com.demo.dto.parkingSpot.*;
 import com.demo.enums.*;
 
 public class ParkingEvent {
     ParkingEventType parkingEventType;
-    ParkingTypeEnum parkingType;
+    ParkingSpotTypeEnum parkingType;
 
-    public ParkingEvent(ParkingEventType parkingEventType, ParkingTypeEnum parkingType) {
+    public ParkingEvent(ParkingEventType parkingEventType, ParkingSpotTypeEnum parkingType) {
         this.parkingEventType = parkingEventType;
         this.parkingType = parkingType;
     }
@@ -20,11 +19,11 @@ public class ParkingEvent {
         this.parkingEventType = parkingEventType;
     }
 
-    public ParkingTypeEnum getParkingType() {
+    public ParkingSpotTypeEnum getParkingType() {
         return parkingType;
     }
 
-    public void setParkingType(ParkingTypeEnum parkingType) {
+    public void setParkingType(ParkingSpotTypeEnum parkingType) {
         this.parkingType = parkingType;
     }
 }

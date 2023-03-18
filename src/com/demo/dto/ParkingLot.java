@@ -1,6 +1,7 @@
 package com.demo.dto;
 
 import com.demo.dto.parkingSpot.*;
+import com.demo.dto.vehicle.*;
 import com.demo.enums.*;
 
 import java.util.*;
@@ -10,13 +11,31 @@ public class ParkingLot {
     private List<EntrancePanel> entrances;
     private List<ExitPanel> exits;
     private DisplayBoard displayBoard;
-    private Map<ParkingTypeEnum , List<ParkingSpot>> occupiedParkingSpots;
-    private Map<ParkingTypeEnum , List<ParkingSpot>> freeParkingSpots;
+    private Map<ParkingSpotTypeEnum, List<ParkingSpot>> occupiedParkingSpots;
+    private Map<ParkingSpotTypeEnum, List<ParkingSpot>> freeParkingSpots;
+    private Map<Class , ParkingSpotTypeEnum> vehicleToParkingSpotMap;
     private static ParkingLot parkingLot= null;
     private ParkingLot(){
         entrances= new ArrayList<EntrancePanel>();
         exits= new ArrayList<ExitPanel>();
         displayBoard= DisplayBoard.getInstance();
+        occupiedParkingSpots= new HashMap<ParkingSpotTypeEnum, List<ParkingSpot>>();
+        freeParkingSpots= new HashMap<ParkingSpotTypeEnum, List<ParkingSpot>>();
+
+        freeParkingSpots.put(ParkingSpotTypeEnum.MINI, new ArrayList<>());
+        freeParkingSpots.put(ParkingSpotTypeEnum.COMPACT, new ArrayList<>());
+        freeParkingSpots.put(ParkingSpotTypeEnum.LARGE, new ArrayList<>());
+
+        occupiedParkingSpots.put(ParkingSpotTypeEnum.MINI, new ArrayList<>());
+        occupiedParkingSpots.put(ParkingSpotTypeEnum.COMPACT, new ArrayList<>());
+        occupiedParkingSpots.put(ParkingSpotTypeEnum.LARGE, new ArrayList<>());
+
+        vehicleToParkingSpotMap= new HashMap<>();
+        vehicleToParkingSpotMap.put(Car.class, ParkingSpotTypeEnum.COMPACT);
+        vehicleToParkingSpotMap.put(MotorBike.class, ParkingSpotTypeEnum.MINI);
+        vehicleToParkingSpotMap.put(Truck.class, ParkingSpotTypeEnum.LARGE);
+
+        name= "parking lot";
     }
 
     public static ParkingLot getInstance(){
@@ -68,19 +87,28 @@ public class ParkingLot {
         this.displayBoard = displayBoard;
     }
 
-    public Map<ParkingTypeEnum, List<ParkingSpot>> getOccupiedParkingSpots() {
+    public Map<ParkingSpotTypeEnum, List<ParkingSpot>> getOccupiedParkingSpots() {
         return occupiedParkingSpots;
     }
 
-    public void setOccupiedParkingSpots(Map<ParkingTypeEnum, List<ParkingSpot>> occupiedParkingSpots) {
+    public void setOccupiedParkingSpots(Map<ParkingSpotTypeEnum, List<ParkingSpot>> occupiedParkingSpots) {
         this.occupiedParkingSpots = occupiedParkingSpots;
     }
 
-    public Map<ParkingTypeEnum, List<ParkingSpot>> getFreeParkingSpots() {
+    public Map<ParkingSpotTypeEnum, List<ParkingSpot>> getFreeParkingSpots() {
         return freeParkingSpots;
     }
 
-    public void setFreeParkingSpots(Map<ParkingTypeEnum, List<ParkingSpot>> freeParkingSpots) {
+    public void setFreeParkingSpots(Map<ParkingSpotTypeEnum, List<ParkingSpot>> freeParkingSpots) {
         this.freeParkingSpots = freeParkingSpots;
     }
+
+    public void addParkingSpot(ParkingSpot parkingSpot){
+        freeParkingSpots.get(parkingSpot.getParkingTypeEnum()).add(parkingSpot);
+    }
+
+    public Map<Class, ParkingSpotTypeEnum> getVehicleToParkingSpotMap() {
+        return vehicleToParkingSpotMap;
+    }
+
 }
