@@ -4,21 +4,31 @@ import com.demo.dto.*;
 import com.demo.enums.*;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public abstract class ParkingSpot {
-    private String id;
+    private static final AtomicInteger x = new AtomicInteger(0);
+    private int id;
     private boolean isFree;
-    private ParkingTypeEnum parkingTypeEnum= ParkingTypeEnum.COMPACT;
-    private ParkingFloor parkingFloor;
+    private ParkingSpotTypeEnum parkingSpotTypeEnum = ParkingSpotTypeEnum.COMPACT;
+    private int floorNumber;
     protected  double amount;
 
-    public String getId() {
+    public ParkingSpot(){
+    };
+
+    public ParkingSpot(ParkingSpotTypeEnum parkingSpotTypeEnum, int floorNumber, double amount) {
+        this.parkingSpotTypeEnum = parkingSpotTypeEnum;
+        this.floorNumber = floorNumber;
+        this.amount = amount;
+        this.isFree= true;
+        id= x.incrementAndGet();
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public boolean isFree() {
         return isFree;
@@ -26,14 +36,6 @@ public abstract class ParkingSpot {
 
     public void setFree(boolean free) {
         isFree = free;
-    }
-
-    public ParkingFloor getParkingFloor() {
-        return parkingFloor;
-    }
-
-    public void setParkingFloor(ParkingFloor parkingFloor) {
-        this.parkingFloor = parkingFloor;
     }
 
     public double getAmount() {
@@ -44,19 +46,8 @@ public abstract class ParkingSpot {
         this.amount = amount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ParkingSpot that)) return false;
-        return id.equals(that.id) && parkingFloor.equals(that.parkingFloor);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, parkingFloor);
-    }
-    public ParkingTypeEnum getParkingTypeEnum() {
-        return parkingTypeEnum;
+    public ParkingSpotTypeEnum getParkingTypeEnum() {
+        return parkingSpotTypeEnum;
     }
     public abstract int cost(int parkingHours);
 }

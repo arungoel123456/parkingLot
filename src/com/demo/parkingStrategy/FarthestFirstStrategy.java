@@ -14,7 +14,8 @@ public class FarthestFirstStrategy implements Strategy{
     }
 
     @Override
-    public ParkingSpot findParkingSpot(ParkingTypeEnum parkingSpotType) throws SpotNotFoundException {
+    public ParkingSpot findParkingSpot(ParkingSpotTypeEnum parkingSpotType) throws SpotNotFoundException {
+
         List<ParkingSpot> freeParkingSpots= parkingLot.getFreeParkingSpots().get(parkingSpotType);
         if(freeParkingSpots.size()==0) throw new SpotNotFoundException("Spot not found");
 
@@ -23,7 +24,8 @@ public class FarthestFirstStrategy implements Strategy{
 
     @Override
     public void addParkingSpot(List<ParkingSpot> parkingSpots, ParkingSpot parkingSpot) {
-
+        // let's say we are adding it in the front
+        parkingSpots.add(parkingSpot);
     }
 
 }

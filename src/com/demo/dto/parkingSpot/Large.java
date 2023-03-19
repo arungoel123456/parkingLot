@@ -4,8 +4,12 @@ import com.demo.enums.*;
 
 public class Large extends ParkingSpot{
 
+    public Large( int floorNumber) {
+        super(ParkingSpotTypeEnum.LARGE , floorNumber, 30);
+    }
+
     @Override
     public int cost(int parkingHours) {
-        return 30*parkingHours;
+        return (int) amount *parkingHours;
     }
 }

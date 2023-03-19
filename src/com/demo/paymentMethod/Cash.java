@@ -2,12 +2,13 @@ package com.demo.paymentMethod;
 
 public class Cash extends PaymentMethod{
 
-    public Cash(double amount) {
-        super(amount);
+    public Cash() {
+//        super(amount);
     }
 
     @Override
-    public boolean initiatePayment() {
-        return false;
+    public boolean initiatePayment(double amount) {
+        System.out.println("making payment by cash of Rs " + amount);
+        return true;
     }
 }

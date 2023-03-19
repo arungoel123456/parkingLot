@@ -1,23 +1,18 @@
 package com.demo.dto.vehicle;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public abstract class Vehicle {
-    private String id;
+    private static final AtomicInteger x = new AtomicInteger(0);
+    private int id;
 
-    public String getId() {
+    public Vehicle() {
+        this.id = x.incrementAndGet();
+    }
+
+    public int getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Vehicle vehicle)) return false;
-        return id.equals(vehicle.id);
     }
 
     @Override
