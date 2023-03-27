@@ -4,7 +4,7 @@ import com.demo.enums.*;
 
 public class Mini extends ParkingSpot {
 
-    public Mini(int floorNumber) {
+    public Mini(Integer floorNumber) {
         super(ParkingSpotTypeEnum.MINI , floorNumber, 10);
     }
 

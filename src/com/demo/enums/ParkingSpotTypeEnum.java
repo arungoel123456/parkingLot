@@ -8,13 +8,13 @@ public enum ParkingSpotTypeEnum {
     MINI(Mini.class),
     ;
 
-    private Class c;
-    ParkingSpotTypeEnum( Class c) {
-        this.c= c;
+    private Class parkingSpot;
+    ParkingSpotTypeEnum( Class parkingSpot) {
+        this.parkingSpot= parkingSpot;
     }
 
-    public Class getC() {
-        return c;
+    public Class getParkingSpot() {
+        return parkingSpot;
     }
 
 }

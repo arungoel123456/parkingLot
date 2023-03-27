@@ -4,7 +4,7 @@ import com.demo.enums.*;
 
 public class Large extends ParkingSpot{
 
-    public Large( int floorNumber) {
+    public Large( Integer floorNumber) {
         super(ParkingSpotTypeEnum.LARGE , floorNumber, 30);
     }
 

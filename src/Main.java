@@ -2,6 +2,7 @@ import com.demo.dto.*;
 import com.demo.dto.account.*;
 import com.demo.dto.parkingSpot.*;
 import com.demo.dto.vehicle.*;
+import com.demo.enums.*;
 import com.demo.exceptions.*;
 import com.demo.interfaces.*;
 import com.demo.parkingStrategy.*;
@@ -13,24 +14,19 @@ public class Main {
     public static void main(String[] args) {
         ParkingLot parkingLot= ParkingLot.getInstance();
         DisplayBoard displayBoard= DisplayBoard.getInstance();
+        ParkingSpotServiceImpl parkingSpotService= new ParkingSpotServiceImpl();
+
         parkingLot.addEntrancePanel(new EntrancePanel("first"));
         parkingLot.addExitPanel(new ExitPanel("first"));
 
-        ParkingSpot a1= new Compact(0);
-        ParkingSpot a2= new Compact(0);
+        ParkingSpot a1= parkingSpotService.createParkingSpot(ParkingSpotTypeEnum.COMPACT, 0);
+        ParkingSpot a2= parkingSpotService.createParkingSpot(ParkingSpotTypeEnum.COMPACT, 0);
 
-        ParkingSpot b1= new Large(0);
-        ParkingSpot b2= new Large(0);
+        ParkingSpot b1= parkingSpotService.createParkingSpot(ParkingSpotTypeEnum.LARGE, 0);
+        ParkingSpot b2= parkingSpotService.createParkingSpot(ParkingSpotTypeEnum.LARGE, 0);
 
-        ParkingSpot c1= new Mini(0);
-        ParkingSpot c2= new Mini(0);
-
-        parkingLot.addParkingSpot(a1);
-        parkingLot.addParkingSpot(a2);
-        parkingLot.addParkingSpot(b1);
-        parkingLot.addParkingSpot(b2);
-        parkingLot.addParkingSpot(c1);
-        parkingLot.addParkingSpot(c2);
+        ParkingSpot c1= parkingSpotService.createParkingSpot(ParkingSpotTypeEnum.MINI, 0);
+        ParkingSpot c2= parkingSpotService.createParkingSpot(ParkingSpotTypeEnum.MINI, 0);
 
         Vehicle v1= new Car();
         Vehicle v2= new Car();

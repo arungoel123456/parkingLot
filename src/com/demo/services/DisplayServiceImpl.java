@@ -24,4 +24,12 @@ public class DisplayServiceImpl implements Observer {
         int newCount= freeSpotCounts.get(event.getParkingType());
         freeSpotCounts.put(event.getParkingType() , newCount + count);
     }
+
+    public void addParkingSpot(ParkingSpotTypeEnum parkingSpotTypeEnum){
+        Integer count= freeSpotCounts.get(parkingSpotTypeEnum);
+        if(count==null){
+            count=0;
+        }
+        freeSpotCounts.replace(parkingSpotTypeEnum, count+1);
+    }
 }

@@ -13,7 +13,6 @@ public class ParkingLot {
     private DisplayBoard displayBoard;
     private Map<ParkingSpotTypeEnum, List<ParkingSpot>> occupiedParkingSpots;
     private Map<ParkingSpotTypeEnum, List<ParkingSpot>> freeParkingSpots;
-    private Map<Class , ParkingSpotTypeEnum> vehicleToParkingSpotMap;
     private static ParkingLot parkingLot= null;
     private ParkingLot(){
         entrances= new ArrayList<EntrancePanel>();
@@ -29,11 +28,6 @@ public class ParkingLot {
         occupiedParkingSpots.put(ParkingSpotTypeEnum.MINI, new ArrayList<>());
         occupiedParkingSpots.put(ParkingSpotTypeEnum.COMPACT, new ArrayList<>());
         occupiedParkingSpots.put(ParkingSpotTypeEnum.LARGE, new ArrayList<>());
-
-        vehicleToParkingSpotMap= new HashMap<>();
-        vehicleToParkingSpotMap.put(Car.class, ParkingSpotTypeEnum.COMPACT);
-        vehicleToParkingSpotMap.put(MotorBike.class, ParkingSpotTypeEnum.MINI);
-        vehicleToParkingSpotMap.put(Truck.class, ParkingSpotTypeEnum.LARGE);
 
         name= "parking lot";
     }
@@ -105,10 +99,6 @@ public class ParkingLot {
 
     public void addParkingSpot(ParkingSpot parkingSpot){
         freeParkingSpots.get(parkingSpot.getParkingTypeEnum()).add(parkingSpot);
-    }
-
-    public Map<Class, ParkingSpotTypeEnum> getVehicleToParkingSpotMap() {
-        return vehicleToParkingSpotMap;
     }
 
 }

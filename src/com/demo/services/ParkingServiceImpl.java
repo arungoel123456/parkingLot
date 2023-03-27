@@ -27,7 +27,7 @@ public class ParkingServiceImpl {
     public ParkingTicket entry(Vehicle vehicle) throws SpotNotFoundException, ParkingSpotTypeNotFound {
 
         // is this ok?? Because this is having 2 different throws
-        ParkingSpotTypeEnum parkingSpotTypeEnum = getParkingSpotType(vehicle);
+        ParkingSpotTypeEnum parkingSpotTypeEnum = vehicle.getSupportedParkingSpotEnum();
         System.out.println("parkingSpotTypeEnum: " + parkingSpotTypeEnum);
 
         try {
@@ -100,8 +100,4 @@ public class ParkingServiceImpl {
         }
     }
 
-    public ParkingSpotTypeEnum getParkingSpotType(Vehicle vehicle) throws ParkingSpotTypeNotFound {
-        Map<Class, ParkingSpotTypeEnum> vehicleToParkingSpotMap= parkingLot.getVehicleToParkingSpotMap();
-        return vehicleToParkingSpotMap.get(vehicle.getClass());
-    }
 }
